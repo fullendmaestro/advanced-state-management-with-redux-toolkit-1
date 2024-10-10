@@ -18,6 +18,7 @@ app.use(cookieParser(config.TOKEN));
 const corsOptions = {
 	// Add your address here i.e. your forwarded address from a cloud environment
 	origin: [
+		"https://vigilant-space-invention-x6r55774gvvfvjg-5173.app.github.dev/",
 		"http://127.0.0.1:5173",
 		"http://127.0.0.1:4173",
 		"http://localhost:5173",
