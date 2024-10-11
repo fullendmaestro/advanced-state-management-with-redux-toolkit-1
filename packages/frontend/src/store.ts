@@ -1,9 +1,7 @@
 import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 import { authBlogApi, refreshAuthentication } from "./services/auth/authSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { configureStore } from "@reduxjs/toolkit";
 import { blogApi } from "./services/posts/blogSlice";
-import { authBlogApi, refreshAuthentication } from "./services/auth/authSlice";
 import authReducer from "./services/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
