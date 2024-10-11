@@ -5,19 +5,19 @@ const LogOutButton = () => {
 	const [logout, { isLoading }] = useLogoutMutation();
 	const navigate = useNavigate();
 	return (
-    	<>
-        	<button
-            	type="button"
-            	onClick={() => {
-                	logout();
-                	navigate("/", {
-                    	replace: true,
-                	});
-            	}}
-        	>
-            	{isLoading ? "Logging out..." : "Logout"}
-        	</button>
-    	</>
+		<>
+			<button
+				type="button"
+				onClick={() => {
+					logout();
+					navigate("/", {
+						replace: true,
+					});
+				}}
+			>
+				{isLoading ? "Logging out..." : "Logout"}
+			</button>
+		</>
 	);
 };
 

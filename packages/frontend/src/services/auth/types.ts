@@ -4,8 +4,8 @@ export interface LoginRequest {
 }
 
 export interface RegisterResponse {
-	message: string,
-	ok?: boolean
+	message: string;
+	ok?: boolean;
 }
 
 export interface RegisterRequest {

@@ -14,82 +14,84 @@ import "./App.css";
 
 const App = () => {
 	let authState: AuthState = {
-    	user: null,
-    	token: null
+		user: null,
+		token: null,
+	};
+	const { user, token } = useAppSelector((state) => state.auth);
+	const userSession = sessionStorage.getItem("user");
+	const response: UserResponse = userSession ? JSON.parse(userSession) : null;
+	if (
+		sessionStorage.getItem("isAuthenticated") === "true" &&
+		response !== null
+	) {
+		authState = {
+			user:
+				{
+					username: response.username,
+					id: response.userId,
+					email: response.email,
+					role: response.role,
+				} ?? user,
+			token: response.token ?? token,
+		};
 	}
-const { user, token } = useAppSelector((state) => state.auth);
-const userSession = sessionStorage.getItem("user");
-const response: UserResponse = userSession ? JSON.parse(userSession) : null;
-if (sessionStorage.getItem("isAuthenticated") === "true" && response !== null) {
-   	authState = {
-       	user: {
-           	username: response.username,
-           	id: response.userId,
-           	email: response.email,
-           	role: response.role
-       	} ?? user,
-       	token: response.token ?? token
-   	}
-};
 	const isAuthenticated = authState.user !== null && authState.token !== null;
 
 	const router = createBrowserRouter([
-    	{
-        	path: "/",
-        	element: (
-            	<Login authState={authState} isAuthenticated={isAuthenticated} />
-        	),
-        	children: [
-            	{
-                	path: "register",
-                	element: (
-                    	<Register isAuthenticated={isAuthenticated} />
-                	),
-            	},
-        	],
-    	},
-    	{
-        	path: "/post/create/",
-        	element: (
-            	<CreatePost isAuthenticated={isAuthenticated} authState={authState} />
-        	),
-    	},
-    	{
-        	path: "/posts/",
-        	element: (
-            	<Posts isAuthenticated={isAuthenticated} authState={authState} />
-        	),
-        	children: [
-            	{
-                	path: "",
-                	element: <AllPost />,
-            	},
-            	{
-                	path: "user/:username",
-                	element: <UserSpecificPosts isAuthenticated={isAuthenticated} />,
-                	loader: async ({ params }) => {
-                    	return params.username;
-                	},
-            	},
-            	{
-                	path: "user/:username/post/edit/:postId",
-                	element: <EditPost isAuthenticated={isAuthenticated} />,
-                	loader: ({ params }) => {
-                    	return { username: params.username, postId: params.postId };
-                	},
-            	},
-        	],
-    	},
-    	{
-        	path: "*",
-        	element: <NotFound />,
-    	},
+		{
+			path: "/",
+			element: (
+				<Login authState={authState} isAuthenticated={isAuthenticated} />
+			),
+			children: [
+				{
+					path: "register",
+					element: <Register isAuthenticated={isAuthenticated} />,
+				},
+			],
+		},
+		{
+			path: "/post/create/",
+			element: (
+				<CreatePost isAuthenticated={isAuthenticated} authState={authState} />
+			),
+		},
+		{
+			path: "/posts/",
+			element: (
+				<Posts isAuthenticated={isAuthenticated} authState={authState} />
+			),
+			children: [
+				{
+					path: "",
+					element: <AllPost />,
+				},
+				{
+					path: "user/:username",
+					element: <UserSpecificPosts isAuthenticated={isAuthenticated} />,
+					loader: async ({ params }) => {
+						return params.username;
+					},
+				},
+				{
+					path: "user/:username/post/edit/:postId",
+					element: <EditPost isAuthenticated={isAuthenticated} />,
+					loader: ({ params }) => {
+						return { username: params.username, postId: params.postId };
+					},
+				},
+			],
+		},
+		{
+			path: "*",
+			element: <NotFound />,
+		},
 	]);
 
 	return (
-    	<div>
-        	<RouterProvider router={router} />
-    	</div>
+		<div>
+			<RouterProvider router={router} />
+		</div>
 	);
 };
 
