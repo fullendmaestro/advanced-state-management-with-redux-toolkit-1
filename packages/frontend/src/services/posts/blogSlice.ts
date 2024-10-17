@@ -18,7 +18,7 @@ export const blogApi = createApi({
 	baseQuery: fetchBaseQuery({
 		// Replace your address here if needed i.e. your forwarded address from a cloud environment
 		baseUrl:
-			"https://vigilant-space-invention-x6r55774gvvfvjg-4040.app.github.dev/",
+			"http://127.0.0.1:4040/api/",
 		prepareHeaders: (headers, { getState, endpoint }) => {
 			const token = (getState() as RootState).auth.token;
 			// Some of the endpoints don't require logins
